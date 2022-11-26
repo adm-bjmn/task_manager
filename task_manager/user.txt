@@ -1,0 +1,4 @@
+admin, adm1n
+phil, ph1l
+naruto, narut0
+mononoke, mononok3
