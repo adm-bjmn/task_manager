@@ -3,9 +3,9 @@ A task management system created in python using CSV type data files.
 # task_manager
 ## Basic task manager program designed in python using CSV files as databases.
 
-To run this file in Docker play ground open an instnace and type:
+To run this file in Docker play ground open an instance and type:
   docker run -i admbjmn/task_manager
-  
+ The files is easier to interpret in VS code and will provide you with more functionality - ie: viewing generated files. 
  
 This Task Management system is a simple stand alone program that allows a user to read, update and delete entries in a file containing details about tasks.
 There is also some basic functionality to generate reports and present data to the user in the console.
