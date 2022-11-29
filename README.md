@@ -3,6 +3,10 @@ A task management system created in python using CSV type data files.
 # task_manager
 ## Basic task manager program designed in python using CSV files as databases.
 
+### Credentials for demo use:
+username: admin
+password: adm1n
+
 To run this file in Docker play ground open an instance and type:
   docker run -i admbjmn/task_manager
  The files is easier to interpret in VS code and will provide you with more functionality - ie: viewing generated files. 
