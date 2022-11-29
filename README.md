@@ -1,5 +1,6 @@
 # task_manager
-A task management system created in python using CSV type data files.
+A task management system created in python using CSV type data files intended to demonstrate some of my knowledge and skill in python. 
+
 # task_manager
 ## Basic task manager program designed in python using CSV files as databases.
 
