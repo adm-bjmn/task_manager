@@ -1,3 +1,9 @@
+# L1T24
+# capstone
+
+# Hi there thanks for the review, The issue was white space in the task.txt file
+# the loop was trying to find indexs in blank lines. 
+# shoud be fine now, Thanks. 
 
 users_task_dict = {}
 users_task_list = []
@@ -10,58 +16,8 @@ import sys
 import os.path
 
 #=====functions===================== 
-
-def login():
-    ''' Login function requests a username from the user and checks it against 
-    a username document. If a username is found then a password is requested.
-    password is checked against the file and if valid the user is logged in.
-    the function returns the username and the logged in status back to the main code.
-    '''
-    username_required = True
-    password_required = True
-    # open a loop for authenticating the username using username_required booleon
-    while username_required:
-        with open('user.txt', 'r') as users:
-            username = input("Please enter a valid username:\n")
-            for lines in users:
-                # if a match is found
-                if username in lines:
-                        print('User confirmed')
-                        username_required = False
-                        '''once a valid username is entered
-                        a username is no longer required
-                        the password for this user will always be 
-                        the next word on the same line.
-                        save the password using a split and an integer selection
-                        '''
-                        true_password = [lines.split()[1]]
-    # once the username loop is closed a password is requested
-    # entered password must match true_password exactly
-    # start a loop for password authentiacation
-    while password_required:
-        password = input("Please enter your password:\n")
-        if password in true_password:  # if the password matches true_password
-            print("\n- Login Successful. -")
-            # once the correct password is entered 
-            # password_required becomes false and closes the loop
-            # login success becomes true
-            password_required = False
-            login_success = True
-        # or else keep asking for password
-        else:
-            print("Password is incorrect, Please try again.")
-    return login_success, username
-
-
 def reg_user():
-    '''reg user allows users to add new users to the program so that
-     they may have tasks associated to them. The logged in user is 
-     poromted to enter a new username and password for the new user. 
-     The password must be confirmed before the user can be succesfully 
-     added. Once a Valid username and password has been entered the 
-     information is then added to the user.txt
-     '''
-    # start by creating a list of users with information from the
+    # strat by creating a list of users with information from the
     # users document
     with open('user.txt', 'r') as users:
         for lines in users:
@@ -96,15 +52,11 @@ def reg_user():
 
 
 def add_task():
-    '''Add task allows the user to add tasks to the tasks.txt. 
-    The user is asked to input the relevant information for 
-    the new task the tasks is then added to the task.txt file
-    '''
     # reset the user confirmed variables ready for re use
     username_required = True
     # request input from user for the inteded user
-    # validate user against user.txt
-    # reset user_confirmed to true upon success
+    # validate user againdt user.txt
+    # reset user_confirmed to ture upon success
     while username_required:
         with open('user.txt', 'r') as users:
             user_allocation = input(
@@ -127,9 +79,10 @@ def add_task():
             date.today().strftime("%d-%b-%Y").replace("-", " "))
         new_task.append(input(
             "When is this task due?: enter as: DD Mon YYYY\n"))
-        new_task.append('No\n')
+        new_task.append('No')
         # once list is complete write list to task.txt
         with open('tasks.txt', 'a') as tasks:
+            tasks.write("\n")
             tasks.write(', '.join(new_task))
         #notify user of success
             return(print("\n - Task entered successfully -\n"
@@ -137,16 +90,11 @@ def add_task():
 
 
 def view_all():
-    '''View all reads all tasks from the tasks.txt file and presents
-    the information to the user in a useful manner. The user is then
-    asked if any alterations are to be made to any tasks. If so 
-    the task alteration function is called.
-    '''
     print('\nThe following tasks are on record:\n')
         #open task.txt and print each line in a readable manner
     with open("tasks.txt", "r") as tasks:
         for lines in tasks:
-            # this if statement will exclude any lines that are incpmlete or 
+            # this if statment will exclude any lines that are incpmlete or 
             # accidental such as accidental returns etc
             if len(lines) > 5:
                 info_list = lines.split(", ")  # split the lines into index's
@@ -162,13 +110,10 @@ def view_all():
 
 
 def view_my(username):
-    '''View my gathers information form the tasks file and any tasks 
-    associtated to the currently logged in user are presented in the console
-    '''
-    '''start by opening the task file and iterate through the lines
+    ''' start by opening the task file and iterate through the lines
     pulling all lines the have the current users usersame
     all other lines must be added to a new_task_file ready for 
-    re printing the file, otherwise they will be lost.
+    re pritning the file, otherwise they will be lost.
     '''
     with open("tasks.txt", "r") as tasks:
         for lines in tasks:
@@ -208,7 +153,7 @@ def view_my(username):
     if task_to_alter in range (0, len(users_task_dict)):
         # use the keys in the dictionary to isolate the specified task
         keys = users_task_dict.keys()
-        '''iterate through the keys, 
+        ''' iterate through the keys, 
         any keys that are not required for changing are added
         straight to the new_task_file list ready for printing
         the specified task for changing is sent to the
@@ -231,7 +176,7 @@ def view_my(username):
         as no changes have been made and tasks.txt doc will stay in tact
         the elif statement responds to -2 because -1 -1 = -2
         this is in response to me changing the user input to obtain indexs
-        instead of the doctionary keys
+        instead of the doctionary keys.
         '''
     elif task_to_alter == -2:
         print('Thank you')
@@ -241,17 +186,12 @@ def view_my(username):
         print('\nSorry this task does not exist.\n')
 
 def task_alterations(x):
-    '''task alterations asks the user to indicate which change they would
-    like to make, to mark as complete, to reassign the task, to change the
-    due date. Based on the response the program then gathers the needed 
-    information and updates the tasks.txt file
-    '''
     # for the functions to work the task_to_alter needs to be returned to 
     # to the relevant task_dict key number. not index number
     x = x + 1
     # create a list that holds tasks information for isolating indexs
     task = str(users_task_dict[x]).split(', ')
-    # first check if the task is complete
+    # first check if the task is compelete
     # if so it cannot be changed
     if task[5] == 'Yes':
         # task must still be re add to new file data
@@ -265,7 +205,7 @@ def task_alterations(x):
                     +"To re assign the task to a differnt user press: 2\n"
                     +"To change the due date of a task press: 3\n"))
 
-        # changing a task to complete is done by 
+        # changeing a task to complete is done by 
         # isolating annd changing the relevant index
         if alteration == 1:
             task[5] = 'Yes'
@@ -276,8 +216,8 @@ def task_alterations(x):
             # to alert the user of success
             output = f'Task {x} has been marked complete.\n'
 
-            '''changing the user is done the same as marking complete.
-            By isolating the index and changing it to the new user
+            '''changing the user is done the same as above by isolating the index
+            and changing it to the new user
             however the username is checked against the users list for
             authenticity
             '''
@@ -330,15 +270,7 @@ def task_alterations(x):
     return print(output)
 
 def task_overview():
-    '''Task overview creates two reports for use in the statistics 
-    function the first report - task_overview.txt - contains macro 
-    information about the tasks on file. information includes: 
-    total tasks count, incomplete task coun,t percentage incomplete 
-    overdue tasks, percentage overdue.
-    The user report creates a files with task information on a user 
-    basis and saves the file as user_overiview.txt
-    '''
-
+    # local variables used inside this function
     content = ''
     task_count = 0
     incomplete_count = 0
@@ -364,9 +296,12 @@ def task_overview():
     for items in task_list:
         # split the task into a list in order to be abel to isolate indexs
         items = items.split(', ')
+        print(items)
+        print(items[5])
         # first using the 5th index, determin how many tasks ate incomplete
         if items[5] == 'No':
             incomplete_count += 1
+            print(incomplete_count)
     # using the above gather in formation you can 
     # easily figure out how many tasks are complete.
     complete_tasks = task_count - incomplete_count
@@ -382,6 +317,8 @@ def task_overview():
         if now >= date_on_file:
             overdue_count += 1
         # same as above for overdue incomplete tasks
+        # i feel like this is doubling down on info 
+        # but the copy ask for it to be included so here it is
         if now >= date_on_file and info[5] == 'No':
             overdue_incomplete_count += 1
     # using information gathered above, percentages can be gerarated 
@@ -460,13 +397,16 @@ def task_overview():
         users_tasks, task_complete, tasks_incomplete, 
         tasks_overdue, round(((users_tasks /total_task) * 100),0)]
 
+    # the following technique for printing was learned at stackabuse.com
     # set the default print output as a variable
     original_stdout = sys.stdout
     # open the user overview file
     with open('user_overview.txt', 'w') as report:
         # change the print out location to this file
         sys.stdout = report
-        # this first section generates the print out for the criteria
+        # I adapted this following code
+        #  from one of your examples codes for fun.
+        # this first secction generates the print out for the criteria
         report_creiteria = [
         'User', 'Total', 'Complete', 'Incomplete', 'Overdue', 'Workload %']
         # each heading is spaces out on a single lines by a tab
@@ -494,18 +434,14 @@ def task_overview():
 
 
 def statistics():
-    '''statistics allows the user to get the information for the user_overview
-     and the task_overview files and presents them in the console in a useful
-    way. If the documents required arn't in the file then the task overview
-    function is called to generate the files before the function continues.
-    '''
     # check to see if the file exists in folder
     # and if it doesnt use the task overiew function to generate reports
     if os.path.exists('tasks_overview.txt') == False:
         task_overview()
-    # when the appropriate file is in place:
-    # open the file, extract the info and print to screen line by line
-    # the info should already be well formatted
+    ''' when the appropriate file is in place:
+    open the file, extract the info and print to screen line by line
+    the info should already be well formatted.
+    '''
     with open('tasks_overview.txt', 'r') as report:
         print("\n - The current macro statistics are as follows. -\n")
         for lines in report:
@@ -527,7 +463,44 @@ def statistics():
 
 
 #=========Login Section================================
-login_success, username = login()
+username_required = True
+password_required = True
+# open a loop for authenticating the username using username_required booleon
+while username_required:
+    with open('user.txt', 'r') as users:
+        username = input("Please enter a valid username:\n")
+        for lines in users:
+            # I chose not to use a list here because I dont want
+            # to create a passwords list aswell and store it
+            # inside the active program. i just want to take
+            # the password that is needed.
+            # if a match is found
+            if username in lines:
+                    print('User confirmed')
+                    username_required = False
+                    # once a valid username is entered
+                    # a username is no longer required
+                    # the password for this user will always be 
+                    # the next word on the same line.
+                    # save the password using a split and an integer selection
+                    true_password = [lines.split()[1]]
+# once the username loop is closed a password is requested
+# entered password must match true_password exactly
+# start a loop for password authentiacation
+while password_required:
+    password = input("Please enter your password:\n")
+    if password in true_password:  # if the password matches true_password
+        print("\n- Login Successful. -")
+        # once the correct password is entered 
+        # password_required becomes false and closes the loop
+        # login success becomes true
+        password_required = False
+        login_success = True
+    # or else keep asking for password
+    else:
+        print("Password is incorrect, Please try again.")
+
+
 #==========main menu==============
 while login_success:
     #presenting the menu to the user and 
@@ -581,3 +554,6 @@ while login_success:
     else:  # loop back to menu entry
         print("\n- You have made a wrong choice, Please Try again. -")
 
+
+
+# Adapted from my original submission for the SE bootcamp - Oct-2022
